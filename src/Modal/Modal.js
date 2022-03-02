@@ -146,7 +146,7 @@ class ReactNativeModal extends React.Component {
       this.open();
     }
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
-    DeviceEventEmitter.addListener(
+    this.didUpdateDimensionsEmitter = DeviceEventEmitter.addListener(
       "didUpdateDimensions",
       this.handleDimensionsUpdate
     );
@@ -154,10 +154,9 @@ class ReactNativeModal extends React.Component {
 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPress)
-    DeviceEventEmitter.removeListener(
-      "didUpdateDimensions",
-      this.handleDimensionsUpdate
-    );
+    if (this.didUpdateDimensionsEmitter) {
+      this.didUpdateDimensionsEmitter.remove();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
