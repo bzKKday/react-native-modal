@@ -457,25 +457,27 @@ class ReactNativeModal extends React.Component {
     return (
       <Animatable.View
         pointerEvents={this.state.isVisible ? "auto" : "none"}
-        style={styles.container}
+        style={[styles.container, this.props.right ? { right: this.props.right } : {}]}
         {...otherProps}
       >
-        <TouchableWithoutFeedback onPress={onBackdropPress}>
-          <Animatable.View
-            ref={ref => (this.backdropRef = ref)}
-            useNativeDriver={useNativeDriver}
-            style={[
-              styles.backdrop,
-              {
-                backgroundColor: this.state.showContent
-                  ? backdropColor
-                  : "transparent",
-                width: deviceWidth,
-                height: deviceHeight
-              }
-            ]}
-          />
-        </TouchableWithoutFeedback>
+        {this.props.hasBackdrop !== false ? (
+          <TouchableWithoutFeedback onPress={onBackdropPress}>
+            <Animatable.View
+              ref={ref => (this.backdropRef = ref)}
+              useNativeDriver={useNativeDriver}
+              style={[
+                styles.backdrop,
+                {
+                  backgroundColor: this.state.showContent
+                    ? backdropColor
+                    : "transparent",
+                  width: deviceWidth,
+                  height: deviceHeight
+                }
+              ]}
+            />
+          </TouchableWithoutFeedback>
+        ) : null}
 
         {this.state.isVisible &&
           avoidKeyboard && (
