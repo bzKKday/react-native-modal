@@ -457,7 +457,7 @@ class ReactNativeModal extends React.Component {
     return (
       <Animatable.View
         pointerEvents={this.state.isVisible ? "auto" : "none"}
-        style={[styles.container, this.props.right ? { right: this.props.right } : {}]}
+        style={[styles.container, this.props.containerStyle]}
         {...otherProps}
       >
         {this.props.hasBackdrop !== false ? (
