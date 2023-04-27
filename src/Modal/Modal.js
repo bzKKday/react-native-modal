@@ -2,7 +2,6 @@ import * as React from "react";
 import {
   Animated,
   Dimensions,
-  DeviceEventEmitter,
   KeyboardAvoidingView,
   Platform,
   PanResponder,
@@ -146,10 +145,7 @@ class ReactNativeModal extends React.Component {
       this.open();
     }
     BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
-    this.didUpdateDimensionsEmitter = DeviceEventEmitter.addListener(
-      "didUpdateDimensions",
-      this.handleDimensionsUpdate
-    );
+    this.didUpdateDimensionsEmitter = Dimensions.addEventListener('change', this.handleDimensionsUpdate)
   }
 
   componentWillUnmount() {
