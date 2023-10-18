@@ -1,11 +1,11 @@
 import * as React from "react";
+import * as ReactNative from 'react-native'
 import {
   Animated,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
   PanResponder,
-  BackHandler,
   StyleSheet,
   TouchableWithoutFeedback
 } from "react-native";
@@ -144,12 +144,16 @@ class ReactNativeModal extends React.Component {
     if (this.state.isVisible) {
       this.open();
     }
-    BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
+    if (Platform.OS !== 'web') {
+      ReactNative.BackHandler.addEventListener('hardwareBackPress', this.onBackButtonPress);
+    }
     this.didUpdateDimensionsEmitter = Dimensions.addEventListener('change', this.handleDimensionsUpdate)
   }
 
   componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPress)
+    if (Platform.OS !== 'web') {
+      ReactNative.BackHandler.removeEventListener('hardwareBackPress', this.onBackButtonPress)
+    }
     if (this.didUpdateDimensionsEmitter) {
       this.didUpdateDimensionsEmitter.remove();
     }
